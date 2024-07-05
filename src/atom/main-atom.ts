@@ -1,5 +1,5 @@
 import { atom, createStore } from 'jotai';
-import { atomWithReducer, loadable } from 'jotai/utils';
+import { atomWithLazy, atomWithReducer, loadable } from 'jotai/utils';
 
 const YES = 'Y';
 const NO = 'N';
@@ -59,3 +59,12 @@ const countReducer = (prev: number, action: { type: 'inc' | 'dec' | 'set'; paylo
 };
 
 export const countReducerAtom = atomWithReducer(0, countReducer);
+
+const initializeExpensiveImage = async () => {
+  const response = await fetch('https://picsum.photos/200/300', { mode: 'cors' });
+  const blob = await response.blob();
+  const url = URL.createObjectURL(blob);
+  return url;
+};
+
+export const videoDataAtom = atomWithLazy(initializeExpensiveImage);

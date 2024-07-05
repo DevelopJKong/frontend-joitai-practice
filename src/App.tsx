@@ -1,8 +1,9 @@
 import { useAtom, useAtomValue } from 'jotai';
-import { countReducerAtom, loadableGetPromiseDataState } from './atom/main-atom';
+import { countReducerAtom, videoDataAtom, loadableGetPromiseDataState } from './atom/main-atom';
 
 function App() {
   const [counter, dispatch] = useAtom(countReducerAtom);
+  const image = useAtomValue(videoDataAtom);
   const asyncAtom = useAtomValue(loadableGetPromiseDataState);
 
   if (asyncAtom.state === 'hasData') {
@@ -15,6 +16,7 @@ function App() {
   return (
     <>
       <div>hello</div>
+      <img src={image} alt='logo' />
       <button type='button' onClick={onCounter}>
         {counter}
       </button>
